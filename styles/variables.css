@@ -1,19 +1,19 @@
 :root {
-  --primary: #010701;
-  --secondary: #010701;
-  --highlight: #04f62c;
+  --primary: #fcfcfc;
+  --secondary: #fafafa;
+  --highlight: #3b82f6;
 
   --text-header: var(--primary);
   --text-main-headers: var(--highlight);
-  --text-links: #006711;
+  --text-links: #000000;
   --text-footer: var(--highlight);
 
-  --bg-main: black;
+  --bg-main: #ffffff;
   --bg-dots: var(--highlight);
-  --bg-lesson: white;
+  --bg-lesson: #fff;
 
   --nav-buttons: var(--highlight);
-  --nav-buttons-text: white;
+  --nav-buttons-text: #fff;
 
   --corner-active: var(--highlight);
   --corner-inactive: #f4f4f4;

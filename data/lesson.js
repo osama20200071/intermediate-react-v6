@@ -125,7 +125,18 @@ export async function getLessons() {
 }
 
 export async function getLesson(targetDir, targetFile) {
-  const dir = await fs.readdir(lessonsPath);
+  // const dir = await fs.readdir(lessonsPath);
+  // only consider actual directories "folders" inside the lessons folder
+  const rawDir = await fs.readdir(lessonsPath);
+  const dir = [];
+  for (let entry of rawDir) {
+    try {
+      const stats = await fs.lstat(path.join(lessonsPath, entry));
+      if (stats.isDirectory()) dir.push(entry);
+    } catch (e) {
+      // ignore entries we can't stat for some reason
+    }
+  }
 
   for (let i = 0; i < dir.length; i++) {
     const dirPath = dir[i];
