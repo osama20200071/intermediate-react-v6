@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 import Footer from "./footer";
 import Header from "./header";
@@ -9,13 +10,26 @@ import { Provider as CourseInfoProvider } from "../context/courseInfoContext";
 function Layout({ children }) {
   const courseInfo = getCourseConfig();
   const headerHook = useState({});
+  const router = useRouter();
+
+  // Check if we're on a lesson page
+  const isLessonPage = router.pathname.startsWith("/lessons/");
+
   return (
     <CourseInfoProvider value={courseInfo}>
       <HeaderProvider value={headerHook}>
-        <div className="remix-app">
+        <div className={`remix-app ${isLessonPage ? "lesson-page" : ""}`}>
           <Header title={courseInfo.title} />
           <div className="content-container">
-            <div className="main">{children}</div>
+            <div className="main">
+              <>
+                <div
+                  id="lessons-nav-portal"
+                  className="lessons-nav-sidebar"
+                ></div>
+                {children}
+              </>
+            </div>
           </div>
           <script async defer src="https://a.holt.courses/latest.js"></script>
           <noscript>

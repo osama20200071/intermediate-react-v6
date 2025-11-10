@@ -3,10 +3,11 @@ import Head from "next/head";
 import { getLesson, getLessons } from "../../../data/lesson";
 import getCourseConfig from "../../../data/course";
 import Corner from "../../../components/corner";
+import LessonsNav from "../../../components/lessonsNav";
 import { Context } from "../../../context/headerContext";
 import createCopyCodeFunctionality from "../../../data/copyCode";
 
-export default function LessonSlug({ post }) {
+export default function LessonSlug({ post, allLessons }) {
   const courseInfo = getCourseConfig();
   const [_, setHeader] = useContext(Context);
 
@@ -20,7 +21,7 @@ export default function LessonSlug({ post }) {
     return () => {
       setHeader({});
       elementsToClean = [];
-    }
+    };
   }, []);
 
   const title = post.title
@@ -49,22 +50,25 @@ export default function LessonSlug({ post }) {
         <meta name="twitter:card" content="summary_large_image"></meta>
       </Head>
       <div className="lesson-container">
-        <div className="lesson">
-          <div
-            className="lesson-content"
-            dangerouslySetInnerHTML={{ __html: post.html }}
-          />
-          <div className="lesson-links">
-            {post.prevSlug ? (
-              <a href={post.prevSlug} className="prev">
-                ← Previous
-              </a>
-            ) : null}
-            {post.nextSlug ? (
-              <a href={post.nextSlug} className="next">
-                Next →
-              </a>
-            ) : null}
+        <div className="lesson-layout">
+          <LessonsNav allLessons={allLessons} />
+          <div className="lesson">
+            <div
+              className="lesson-content"
+              dangerouslySetInnerHTML={{ __html: post.html }}
+            />
+            <div className="lesson-links">
+              {post.prevSlug ? (
+                <a href={post.prevSlug} className="prev">
+                  ← Previous
+                </a>
+              ) : null}
+              {post.nextSlug ? (
+                <a href={post.nextSlug} className="next">
+                  Next →
+                </a>
+              ) : null}
+            </div>
           </div>
         </div>
         <Corner />
@@ -75,9 +79,11 @@ export default function LessonSlug({ post }) {
 
 export async function getStaticProps({ params }) {
   const post = await getLesson(params.section, params.slug);
+  const allLessons = await getLessons();
   return {
     props: {
       post,
+      allLessons,
     },
   };
 }
