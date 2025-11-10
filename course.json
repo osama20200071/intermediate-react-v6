@@ -23,5 +23,6 @@
     "framework",
     "web development"
   ],
-  "csvPath": "./out/lessons.csv"
+  "csvPath": "./out/lessons.csv",
+  "productionBaseUrl": "/intermediate-react-v6"
 }
